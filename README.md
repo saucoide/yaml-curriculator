@@ -6,9 +6,18 @@ of different themes
 ## Example
 
 `uv run generate.py resume.yaml --themes fern-creek deser-sand`
+
 `uv run generate.py resume.yaml --themes all --open`
 
-Results are saved in the `output/` directory
+Results are saved in the `output/` directory, they look kinda like this:
+
+<img src="./.examples/cv_1.png" width="15%"></img>
+<img src="./.examples/cv_2.png" width="15%"></img>
+<img src="./.examples/cv_3.png" width="15%"></img>
+<img src="./.examples/cv_4.png" width="15%"></img>
+<img src="./.examples/cv_6.png" width="15%"></img>
+<img src="./.examples/cv_7.png" width="15%"></img>
+
 
 yaml format, there is a an example resume.yaml filled in the repo
 
