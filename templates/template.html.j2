@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{ basics.name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <style>
+        {{ css_content }}
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            {% if basics.image %}
+            <img src="{{ basics.image }}" alt="{{ basics.name }}" class="profile-pic">
+            {% endif %}
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Contact</h3>
+                <div class="contact-info">
+                    {% if basics.email %}
+                    <div class="contact-item">
+                        <i class="fas fa-paper-plane"></i>
+                        <a href="mailto:{{ basics.email }}">{{ basics.email }}</a>
+                    </div>
+                    {% endif %}
+
+                    {% if basics.phone %}
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ basics.phone }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if basics.location %}
+                    <div class="contact-item">
+                        <i class="fas fa-location-pin"></i>
+                        <span>{{ basics.location.city }}, {{ basics.location.country_code }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% for profile in basics.profiles %}
+                    <div class="contact-item">
+                        {% if 'linkedin' in profile.network.lower() %}
+                        <i class="fab fa-linkedin-in"></i>
+                        {% elif 'github' in profile.network.lower() %}
+                        <i class="fab fa-github-alt"></i>
+                        {% else %}
+                        <i class="fas fa-link"></i>
+                        {% endif %}
+                        <a href="{{ profile.url }}" target="_blank">{{ profile.display_as }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if languages %}
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Languages</h3>
+                    <div class="skill-tags">
+                        {% for lang in languages %}
+                        <span class="skill-tag">{{ lang }}</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            {% endif %}
+
+            {% if skills %}
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Skills</h3>
+                {% for skill in skills %}
+                <div class="skill-group">
+                    <span class="skill-name">{{ skill.name }}</span>
+                    <div class="skill-tags">
+                        {% for keyword in skill.keywords %}
+                        <span class="skill-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if certificates %}
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Certifications</h3>
+                {% for cert in certificates %}
+                <div class="skill-group">
+                    <span class="skill-name" style="font-size: 0.8rem;">{{ cert.name }}</span>
+                    <span style="font-size: 0.75rem; color: var(--secondary-color); font-family: var(--font-header);">// {{ cert.issuer }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h1 class="name">{{ basics.name }}</h1>
+                <div class="label">{{ basics.label }}</div>
+            </header>
+
+            {% if basics.summary %}
+            <div class="summary">
+                {{ basics.summary }}
+            </div>
+            {% endif %}
+
+            {% if work %}
+            <section class="section">
+                <h2 class="section-title">Work Experience</h2>
+                <div class="timeline">
+                    {% for job in work %}
+                        <div class="timeline-item">
+                            <div class="job-info-group">
+                                <div class="item-header">
+                                    <div class="item-title">{{ job.position }}</div>
+                                    <div class="item-date">{{ job.start_date }} → {{ job.end_date | default('Present') }}</div>
+                                </div>
+                                <div class="item-org">{{ job.company }}</div>
+                            </div>
+                            {% if job.summary %}
+                            <p class="item-description">{{ job.summary }}</p>
+                            {% endif %}
+                            {% if job.highlights %}
+                            <ul class="item-highlights">
+                                {% for highlight in job.highlights %}
+                                <li>{{ highlight }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if education %}
+            <section class="section">
+                <h2 class="section-title">Education</h2>
+                <div class="timeline">
+                    {% for edu in education %}
+                    <div class="education-item timeline-item">
+                        <div class="job-info-group">
+                            <div class="item-header">
+                                <div class="item-title">{{ edu.institution }}</div>
+                                <div class="item-date">{{ edu.start_date }} → {{ edu.end_date }}</div>
+                            </div>
+                            <div class="item-org">{{ edu.study_type }} in {{ edu.area }}</div>
+                        </div>
+                        {% if edu.summary %}
+                        <p class="item-description">{{ edu.summary }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </main>
+    </div>
+</body>
+</html>
